@@ -1,0 +1,29 @@
+{
+  "name": "spot-social-node",
+  "version": "1.0.0",
+  "description": "Node.js HTTP Web server for Spot Social",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Krish-002/spot-social-node.git"
+  },
+  "keywords": [
+    "Node",
+    "REST",
+    "Server",
+    "HTTP",
+    "Web",
+    "Development",
+    "CS5610",
+    "CS4550"
+  ],
+  "author": "Krish Bansal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Krish-002/spot-social-node/issues"
+  },
+  "homepage": "https://github.com/Krish-002/spot-social-node#readme"
+}
