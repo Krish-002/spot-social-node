@@ -2,6 +2,7 @@
   "name": "spot-social-node",
   "version": "1.0.0",
   "description": "Node.js HTTP Web server for Spot Social",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,5 +26,10 @@
   "bugs": {
     "url": "https://github.com/Krish-002/spot-social-node/issues"
   },
-  "homepage": "https://github.com/Krish-002/spot-social-node#readme"
+  "homepage": "https://github.com/Krish-002/spot-social-node#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.2"
+  }
 }
