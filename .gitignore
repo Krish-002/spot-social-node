@@ -3,3 +3,4 @@ node_modules
 .env
 .env.local
 .env.production
+./Spot/Post/Utils/meta-notch-421121-f9e6a92ec1c8.json

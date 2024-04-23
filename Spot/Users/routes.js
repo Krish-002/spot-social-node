@@ -26,15 +26,24 @@ export default function UserRoutes(app) {
     }
   };
 
-  // Find all users
-  const findAllUsers = async (req, res) => {
-    try {
-      const users = await dao.findAllUsers();
+// Find all users or search by username
+const findAllUsers = async (req, res) => {
+  try {
+      const { username } = req.query;
+      let users;
+      if (username) {
+          users = await dao.findUsersByUsername(username);
+      } else {
+          users = await dao.findAllUsers();
+      }
       res.status(200).json(users);
-    } catch (error) {
+  } catch (error) {
       res.status(500).json({ message: error.message });
-    }
-  };
+  }
+};
+
+app.get("/api/users", findAllUsers);
+
 
   // Find a user by ID
   const findUserById = async (req, res) => {

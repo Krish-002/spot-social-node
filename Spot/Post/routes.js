@@ -1,9 +1,24 @@
 import * as dao from "./dao.js";
+import express from 'express';
+import multer from 'multer';
+import { uploadImageToStorage } from './Utils/gcsUpload.js';
+
+
 
 export default function PostRoutes(app) {
-    app.post("/api/posts", async (req, res) => {
-        const post = await dao.createPost(req.body);
-        res.json(post);
+    const upload = multer({
+        storage: multer.memoryStorage(),
+        limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+    });
+    
+    app.post('/api/posts', upload.single('image'), async (req, res) => {
+        try {
+            const imageUrl = await uploadImageToStorage(req.file);
+            const post = await dao.createPost({ ...req.body, imageUrl });
+            res.json(post);
+        } catch (error) {
+            res.status(500).json({ message: error.message});
+        }
     });
 
     app.get("/api/posts", async (req, res) => {
