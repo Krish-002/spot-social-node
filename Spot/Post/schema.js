@@ -5,7 +5,8 @@ const postSchema = new mongoose.Schema({
     songImageUrl: { type: String, required: true },
     songName: { type: String, required: true },
     artistName: { type: String, required: true },
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] // Array of user ObjectIds who liked the post
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    postedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 },
     { collection: "posts" }
 );
