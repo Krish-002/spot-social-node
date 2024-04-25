@@ -40,4 +40,9 @@ export default function PostRoutes(app) {
         const post = await dao.deletePost(req.params.id);
         res.json(post);
     });
+
+    app.post("/api/posts/like/:postId/:userId", async (req, res) => {
+        const post = await dao.likePost(req.params.postId, req.params.userId);
+        res.json(post);
+    });
 }
