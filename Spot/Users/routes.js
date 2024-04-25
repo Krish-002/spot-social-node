@@ -1,8 +1,32 @@
 import * as dao from "./dao.js";
 let currentUser = null;
+import multer from "multer";
+import { uploadImageToStorage } from "../Post/Utils/gcsUpload.js";
 
 
 export default function UserRoutes(app) {
+  const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 } 
+  });
+
+  const updateUserImage = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const user = await dao.findUserById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        if (!req.file) {
+            return res.status(400).json({ message: "No image file provided" });
+        }
+        const imageUrl = await uploadImageToStorage(req.file);
+        const updatedUser = await dao.updateUser(userId, { profilePictureUrl: imageUrl });
+        res.status(200).json({ message: "Profile image updated" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
   // Create a new user
   const createUser = async (req, res) => {
     try {
@@ -27,38 +51,38 @@ export default function UserRoutes(app) {
     }
   };
 
-// Find all users or search by username
-const findAllUsers = async (req, res) => {
-  try {
+  // Find all users or search by username
+  const findAllUsers = async (req, res) => {
+    try {
       const { username } = req.query;
       let users;
       if (username) {
-          users = await dao.findUsersByUsername(username);
+        users = await dao.findUsersByUsername(username);
       } else {
-          users = await dao.findAllUsers();
+        users = await dao.findAllUsers();
       }
       res.status(200).json(users);
-  } catch (error) {
+    } catch (error) {
       res.status(500).json({ message: error.message });
-  }
-};
-
-app.get("/api/users", findAllUsers);
-
-const findUserByUsername = async (req, res) => {
-  try {
-    const { username } = req.params;
-    const user = await dao.findUserByUsername(username);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+  };
 
-app.get("/api/users/:username", findUserByUsername);
+  app.get("/api/users", findAllUsers);
+
+  const findUserByUsername = async (req, res) => {
+    try {
+      const { username } = req.params;
+      const user = await dao.findUserByUsername(username);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  app.get("/api/users/:username", findUserByUsername);
 
 
   // Find a user by ID
@@ -131,6 +155,7 @@ app.get("/api/users/:username", findUserByUsername);
     res.status(200).json(currentUser);
   };
 
+  app.put('/api/users/:userId/image', upload.single('image'), updateUserImage);
   app.post("/api/users", createUser);
   app.get("/api/users/:userId", findUserById);
   app.get("/api/users", findAllUsers);

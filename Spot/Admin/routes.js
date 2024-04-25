@@ -64,6 +64,19 @@ export default function AdminRoutes(app) {
     }
   };
 
+  const adminSignin = async (req, res) => {
+    try {
+      const admin = await dao.findAdminByCredentials(req.body.username, req.body.password);
+      if (!admin) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+      res.status(200).json(admin);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  app.post("/api/admins/signin", adminSignin);
   app.post("/api/admins", createAdmin);
   app.get("/api/admins", findAllAdmins);
   app.get("/api/admins/:adminId", findAdminById);
