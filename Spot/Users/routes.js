@@ -87,6 +87,7 @@ export default function UserRoutes(app) {
 
   // Find a user by ID
   const findUserById = async (req, res) => {
+    console.log("reached here");
     try {
       const { userId } = req.params;
       const user = await dao.findUserById(userId);
@@ -157,7 +158,7 @@ export default function UserRoutes(app) {
 
   app.put('/api/users/:userId/image', upload.single('image'), updateUserImage);
   app.post("/api/users", createUser);
-  app.get("/api/users/:userId", findUserById);
+  app.get("/api/users/id/:userId", findUserById);
   app.get("/api/users", findAllUsers);
   app.put("/api/users/:userId", updateUser);
   app.delete("/api/users/:userId", deleteUser);

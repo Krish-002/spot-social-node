@@ -13,7 +13,6 @@ export default function MealPlanRoutes(app) {
 
 
   app.get("/api/mealplans/:id", async (req, res) => {
-    console.log("Requested ID:", req.params.id);  // Log the ID that is being requested
     const mealplan = await dao.findMealPlanById(req.params.id);
     res.json(mealplan);
   });
