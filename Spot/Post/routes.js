@@ -45,4 +45,27 @@ export default function PostRoutes(app) {
         const post = await dao.likePost(req.params.postId, req.params.userId);
         res.json(post);
     });
+
+    app.get("/api/posts/liked/:userId", async (req, res) => {
+        try {
+            const userId = req.params.userId;
+            const posts = await dao.findPostsLikedByUser(userId);
+            res.json(posts);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    });
+
+    app.put("/api/posts/dislike/:postId/:userId", async (req, res) => {
+        try {
+            const { postId, userId } = req.params;
+            
+            const post = await dao.dislikePost(postId, userId);
+            res.json(post);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    });
+    
+    
 }
