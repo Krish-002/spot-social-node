@@ -1,6 +1,7 @@
 import * as dao from "./dao.js";
 let currentUser = null;
 
+
 export default function UserRoutes(app) {
   // Create a new user
   const createUser = async (req, res) => {
@@ -116,8 +117,8 @@ app.get("/api/users", findAllUsers);
   };
 
   app.post("/api/users", createUser);
-  app.get("/api/users", findAllUsers);
   app.get("/api/users/:userId", findUserById);
+  app.get("/api/users", findAllUsers);
   app.put("/api/users/:userId", updateUser);
   app.delete("/api/users/:userId", deleteUser);
   app.post("/api/users/signup", signup);

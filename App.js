@@ -4,6 +4,7 @@ import UserRoutes from "./Spot/Users/routes.js";
 import PostRoutes from "./Spot/Post/routes.js";
 import GymStatisticRoutes from "./Spot/GymStatistic/routes.js";
 import GymSplitRoutes from "./Spot/GymSplit/routes.js";
+import MealPlanRoutes from "./Spot/MealPlan/routes.js";
 import cors from "cors";
 
 // MongoDB connection
@@ -29,6 +30,7 @@ PostRoutes(app);
 GymStatisticRoutes(app);
 GymSplitRoutes(app);
 UserRoutes(app);
+MealPlanRoutes(app);
 
 // Start server
 app.listen(process.env.PORT || 4000, () => {

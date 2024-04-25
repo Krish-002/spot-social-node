@@ -10,18 +10,13 @@ export default function MealPlanRoutes(app) {
     }
   };
 
-  const findMealPlanById = async (req, res) => {
-    try {
-      const { id } = req.params;
-      const mealPlan = await dao.findMealPlanById(id);
-      if (!mealPlan) {
-        return res.status(404).json({ message: "Meal Plan not found" });
-      }
-      res.status(200).json(mealPlan);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  };
+
+
+  app.get("/api/mealplans/:id", async (req, res) => {
+    console.log("Requested ID:", req.params.id);  // Log the ID that is being requested
+    const mealplan = await dao.findMealPlanById(req.params.id);
+    res.json(mealplan);
+  });
 
   const findAllMealPlans = async (req, res) => {
     try {
@@ -60,7 +55,6 @@ export default function MealPlanRoutes(app) {
 
   app.post("/api/mealplans", createMealPlan);
   app.get("/api/mealplans", findAllMealPlans);
-  app.get("/api/mealplans/:id", findMealPlanById);
   app.put("/api/mealplans/:id", updateMealPlan);
   app.delete("/api/mealplans/:id", deleteMealPlan);
 }

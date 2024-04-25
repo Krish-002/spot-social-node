@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   profilePictureUrl: { type: String, default: '' },
-  gymSplitIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'GymSplitModel' }],
+  gymSplitIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'gymSplits' }],
   mealPlanIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MealPlanModel'}],
   gymStatisticIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'GymStatisticModel' }],
   postIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PostModel' }]
